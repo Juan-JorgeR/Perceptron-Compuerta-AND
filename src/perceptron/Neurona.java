@@ -3,9 +3,9 @@ package perceptron;
 import java.util.Random;
 
 public class Neurona {
-	public double umbral; // bias
-	public double[] pesos; // w
-	public double sumaPonderada; // sumatoria
+	private double umbral; // bias
+	private double[] pesos; // w
+	private double sumaPonderada; // sumatoria
 
 	public Neurona(int numEntradas, Random r) {
 		umbral = r.nextDouble();
@@ -29,7 +29,7 @@ public class Neurona {
 	}
 	public double activar(double[] entradas) {
 		sumaPonderada = umbral;
-		for(int i = 0; i < entradas.length; i++){
+		for(int i = 0; i < entradas.length; i++) {
 			sumaPonderada += entradas[i] * pesos[i]; 
 		}
 

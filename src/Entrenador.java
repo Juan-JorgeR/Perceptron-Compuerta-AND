@@ -40,7 +40,7 @@ public class Entrenador {
         Capa capa = null;
         
         for(int i = 0; i < cantidadCapas; i++) {
-        	capa = red.capas.get(i);
+        	capa = red.getCapas().get(i);
         	cantidadNeuronas = capa.getNeuronas().size();
         	cantidadPesos = capa.getNeuronas().get(0).getPesos().length;
         	
@@ -69,10 +69,10 @@ public class Entrenador {
         }
 
         for(int i = cantidadCapas - 1; i >= 0; i--){
-            for(int j = 0; j < red.capas.get(i).neuronas.size(); j++) {
+            for(int j = 0; j < cantidadNeuronasCapai; j++) {
             	capai = red.getCapas().get(i);
             	
-                if(i == red.capas.size() - 1) {
+                if(i == cantidadCapas - 1) {
                     double y = capai.getSalidas()[j];
                     sigmas.get(i)[j] = (y - salidaEsperada[j]) * SigmoideDerivada(y);
                 } else {
@@ -82,7 +82,7 @@ public class Entrenador {
                     for(int k = 0; k < cantidadNeuronasCapaj; k++) {
                         sum += capaj.getNeuronas().get(k).getPesos()[j] * sigmas.get(i + 1)[k];
                     }
-                    sigmas.get(i)[j] = SigmoideDerivada(capai.getNeuronas().get(j).sumaPonderada) * sum;
+                    sigmas.get(i)[j] = SigmoideDerivada(capai.getNeuronas().get(j).getSumaPonderada()) * sum;
                 }
             }
         }
@@ -96,13 +96,13 @@ public class Entrenador {
         Capa capaj = null;
     	
         for(int i = 1; i < cantidadCapas; i++) {
-        	capaj =  red.capas.get(i);
+        	capaj =  red.getCapas().get(i);
         	cantidadNeuronasCapaj = capaj.getNeuronas().size();
         	
             for(int j = 0; j < cantidadNeuronasCapaj; j++) {
             	cantidadPesos = capaj.getNeuronas().get(j).getPesos().length;
                 for(int k = 0; k < cantidadPesos; k++) {
-                	capai = red.capas.get(i - 1);
+                	capai = red.getCapas().get(i - 1);
                     deltas.get(i)[j][k] += sigmas.get(i)[j] * capai.getSalidas()[k];
                 }
             }
@@ -115,7 +115,7 @@ public class Entrenador {
          Capa capai = null;
     	
         for(int i = 0; i < cantidadCapas; i++) {
-        	capai = red.capas.get(i);
+        	capai = red.getCapas().get(i);
         	cantidadNeuronas = capai.getNeuronas().size();
             for(int j = 0; j < cantidadNeuronas; j++) {
             	cantidadPesos = capai.getNeuronas().get(j).getPesos().length;
@@ -134,7 +134,7 @@ public class Entrenador {
     	double umbral;
     	
     	for(int i = 0; i < cantidadCapas; i++) {
-    		capai = red.capas.get(i);
+    		capai = red.getCapas().get(i);
     		cantidadNeuronas = capai.getNeuronas().size();
             for(int j = 0; j < cantidadNeuronas; j++) { 
             	umbral =  capai.getNeuronas().get(j).getUmbral();
